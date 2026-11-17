@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winter Watch</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef3f7;
+      margin: 0;
+      padding: 30px 15px;
+      color: #263445;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px #0001;
+    }
+
+    h1 {
+      color: #17466b;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border-radius: 7px;
+      border: 1px solid #ccd5df;
+    }
+
+    button {
+      background: #176b87;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .forget {
+      background: #a94444;
+    }
+
+    .status {
+      color: #267647;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>❄️ Winter Watch</h1>
+    <p>County Cavan Roads Decision Support Tool</p>
+
+    <h2>AI Settings</h2>
+
+    <label>AI Provider</label>
+    <select id="provider">
+      <option value="google">Google Gemini</option>
+      <option value="openai">OpenAI</option>
+      <option value="anthropic">Anthropic</option>
+      <option value="groq">Groq</option>
+    </select>
+
+    <label>Model name</label>
+    <input id="model" placeholder="Enter your model name">
+
+    <label>API Key</label>
+    <input id="apiKey" type="password"
+      placeholder="Paste your private API key">
+
+    <button onclick="saveSettings()">Save Settings</button>
+    <button class="forget" onclick="forgetKey()">Forget Key</button>
+
+    <p id="status" class="status"></p>
+
+    <hr>
+
+    <h2>Ask Winter Watch</h2>
+
+    <input id="question"
+      placeholder="Ask a question about tonight's roads...">
+
+    <button onclick="askQuestion()">Send Question</button>
+
+    <div id="answer"></div>
+
+  </div>
+
+  <script>
+    function saveSettings() {
+      const provider =
+        document.getElementById("provider").value;
+
+      const model =
+        document.getElementById("model").value;
+
+      const key =
+        document.getElementById("apiKey").value;
+
+      if (!key.trim() || !model.trim()) {
+        document.getElementById("status").textContent =
+          "Please enter your model and API key.";
+        return;
+      }
+
+      localStorage.setItem("ww_provider", provider);
+      localStorage.setItem("ww_model", model);
+      localStorage.setItem("ww_key", key);
+
+      document.getElementById("apiKey").value = "";
+
+      document.getElementById("status").textContent =
+        "Settings saved in this browser.";
+    }
+
+    function forgetKey() {
+      localStorage.removeItem("ww_provider");
+      localStorage.removeItem("ww_model");
+      localStorage.removeItem("ww_key");
+
+      document.getElementById("apiKey").value = "";
+
+      document.getElementById("status").textContent =
+        "Saved settings and key forgotten.";
+    }
+
+    function askQuestion() {
+      document.getElementById("answer").textContent =
+        "The AI connection will be added in the next step.";
+    }
+  </script>
+</body>
+</html>
